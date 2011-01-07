@@ -382,3 +382,51 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation NSCursor (Karelia)
+
+- (void)ks_drawAtPoint:(NSPoint)point;
+{
+    NSImage *image = [self image];
+    
+    
+    // Figure where to draw accounting for hot point
+    NSRect rect;
+    rect.origin.x = point.x - [self hotSpot].x;
+    rect.origin.y = point.y - [self hotSpot].y;
+    rect.size = [image size];
+    
+    
+    // Flip the context
+    NSGraphicsContext *graphicsContext = [NSGraphicsContext currentContext];
+    CGContextRef context = [graphicsContext graphicsPort];
+    if ([graphicsContext isFlipped])
+    {
+        CGContextSaveGState(context);
+        CGContextScaleCTM(context, 1.0, -1.0);
+        CGContextTranslateCTM(context, 0.0, -2.0*rect.origin.y-NSHeight(rect));
+    }
+    
+    [image drawInRect:rect
+             fromRect:NSZeroRect
+            operation:NSCompositeSourceOver
+             fraction:1.0f];
+    
+    if ([graphicsContext isFlipped]) CGContextRestoreGState(context);
+}
+
+- (NSRect)ks_drawingRectForPoint:(NSPoint)point;
+{
+    NSRect result;
+    result.origin.x = point.x - [self hotSpot].x;
+    result.origin.y = point.y - [self hotSpot].y;
+    result.size = [[self image] size];
+    
+    return result;
+}
+
+@end

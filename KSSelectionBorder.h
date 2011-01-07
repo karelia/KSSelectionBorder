@@ -73,3 +73,13 @@ enum
 
 
 @end
+
+
+#pragma mark -
+
+
+@interface NSCursor (Karelia)
+// Draws the cursor's image, being cunning enough to draw the hot point at specified point
+- (void)ks_drawAtPoint:(NSPoint)point;
+- (NSRect)ks_drawingRectForPoint:(NSPoint)point;
+@end
