@@ -1,0 +1,3 @@
+[submodule "ESCursors"]
+	path = ESCursors
+	url = git@github.com:karelia/ESCursors.git
