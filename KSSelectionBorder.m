@@ -9,7 +9,8 @@
 
 #import "KSSelectionBorder.h"
 
-#import "NSColor+Karelia.h"
+
+#define AQUA_COLOR [NSColor colorWithCalibratedHue:0.583333f saturation:1.0f brightness:1.0f alpha:1.0f]
 
 
 @interface KSSelectionBorder ()
@@ -32,7 +33,7 @@
     self = [super init];
     
     _resizingMask = /*kCALayerLeftEdge | */kCALayerRightEdge | kCALayerBottomEdge/* | kCALayerTopEdge*/;
-    _borderColor = [[[NSColor aquaColor] colorWithAlphaComponent:0.5] copy];
+    _borderColor = [[AQUA_COLOR colorWithAlphaComponent:0.5] copy];
     
     return self;
 }
@@ -376,7 +377,7 @@
     }
     else
     {
-        [[[NSColor aquaColor] colorWithAlphaComponent:0.5] setFill];
+        [[AQUA_COLOR colorWithAlphaComponent:0.5] setFill];
         NSFrameRectWithWidthUsingOperation(rect, 1.0, NSCompositeSourceOver);
     }
 }
