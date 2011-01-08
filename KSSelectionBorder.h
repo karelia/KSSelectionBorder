@@ -53,6 +53,10 @@ enum
 - (BOOL)canResizeUsingHandle:(SVGraphicHandle)handle;
 
 
+#pragma mark Cursor
++ (NSCursor *)cursorWithHandle:(SVGraphicHandle)handle;
+
+
 #pragma mark Layout
 
 - (NSRect)frameRectForGraphicBounds:(NSRect)bounds;  // adjusts frame to suit -minSize if needed

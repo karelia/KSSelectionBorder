@@ -9,6 +9,8 @@
 
 #import "KSSelectionBorder.h"
 
+#import "ESCursors.h"
+
 
 #define AQUA_COLOR [NSColor colorWithCalibratedHue:0.583333f saturation:1.0f brightness:1.0f alpha:1.0f]
 
@@ -90,6 +92,28 @@
     }
     
     return result;
+}
+
+#pragma mark Cursor
+
++ (NSCursor *)cursorWithHandle:(SVGraphicHandle)handle;
+{
+    CGFloat radians = 0.0;
+    switch(handle)
+    {
+            // We might want to consider using angled size cursors  even for middle handles to show that you are resizing both dimensions?
+            
+        case kSVGraphicUpperLeftHandle:		radians = M_PI_4 + M_PI_2;			break;
+        case kSVGraphicUpperMiddleHandle:	radians = M_PI_2;					break;
+        case kSVGraphicUpperRightHandle:	radians = M_PI_4;					break;
+        case kSVGraphicMiddleLeftHandle:	radians = M_PI;						break;
+        case kSVGraphicMiddleRightHandle:	radians = M_PI;						break;
+        case kSVGraphicLowerLeftHandle:		radians = M_PI + M_PI_4;			break;
+        case kSVGraphicLowerMiddleHandle:	radians = M_PI + M_PI_2;			break;
+        case kSVGraphicLowerRightHandle:	radians = M_PI + M_PI_2 + M_PI_4;	break;
+        default: break;
+    }
+    return [ESCursors straightCursorForAngle:radians withSize:16.0];
 }
 
 #pragma mark Layout
