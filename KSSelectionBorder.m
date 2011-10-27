@@ -16,7 +16,7 @@
 
 
 @interface KSSelectionBorder ()
-- (BOOL)isPoint:(NSPoint)point withinHandle:(SVGraphicHandle)handle frameRect:(NSRect)bounds;
+- (BOOL)isPoint:(NSPoint)point withinHandle:(KSSelectionBorderHandle)handle frameRect:(NSRect)bounds;
 - (BOOL)isPoint:(NSPoint)point withinHandleAtPoint:(NSPoint)handlePoint;
 
 - (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view enabled:(BOOL)enabled;
@@ -56,35 +56,35 @@
 
 @synthesize resizingMask = _resizingMask;
 
-- (BOOL)canResizeUsingHandle:(SVGraphicHandle)handle;
+- (BOOL)canResizeUsingHandle:(KSSelectionBorderHandle)handle;
 {
     BOOL result = NO;
     
     unsigned int mask = [self resizingMask];
     switch (handle)
     {
-        case kSVGraphicUpperLeftHandle:
+        case KSSelectionBorderUpperLeftHandle:
             result = (mask & kCALayerLeftEdge && mask & kCALayerTopEdge);
             break;
-        case kSVGraphicUpperMiddleHandle:
+        case KSSelectionBorderUpperMiddleHandle:
             result = (mask & kCALayerTopEdge);
             break;
-        case kSVGraphicUpperRightHandle:
+        case KSSelectionBorderUpperRightHandle:
             result = (mask & kCALayerRightEdge && mask & kCALayerTopEdge);
             break;
-        case kSVGraphicMiddleLeftHandle:
+        case KSSelectionBorderMiddleLeftHandle:
             result = (mask & kCALayerLeftEdge);
             break;
-        case kSVGraphicMiddleRightHandle:
+        case KSSelectionBorderMiddleRightHandle:
             result = (mask & kCALayerRightEdge);
             break;
-        case kSVGraphicLowerLeftHandle:
+        case KSSelectionBorderLowerLeftHandle:
             result = (mask & kCALayerLeftEdge && mask & kCALayerBottomEdge);
             break;
-        case kSVGraphicLowerMiddleHandle:
+        case KSSelectionBorderLowerMiddleHandle:
             result = (mask & kCALayerBottomEdge);
             break;
-        case kSVGraphicLowerRightHandle:
+        case KSSelectionBorderLowerRightHandle:
             result = (mask & kCALayerRightEdge && mask & kCALayerBottomEdge);
             break;
         default:
@@ -96,21 +96,21 @@
 
 #pragma mark Cursor
 
-+ (NSCursor *)cursorWithHandle:(SVGraphicHandle)handle;
++ (NSCursor *)cursorWithHandle:(KSSelectionBorderHandle)handle;
 {
     CGFloat radians = 0.0;
     switch(handle)
     {
             // We might want to consider using angled size cursors  even for middle handles to show that you are resizing both dimensions?
             
-        case kSVGraphicUpperLeftHandle:		radians = M_PI_4 + M_PI_2;			break;
-        case kSVGraphicUpperMiddleHandle:	radians = M_PI_2;					break;
-        case kSVGraphicUpperRightHandle:	radians = M_PI_4;					break;
-        case kSVGraphicMiddleLeftHandle:	radians = M_PI;						break;
-        case kSVGraphicMiddleRightHandle:	radians = M_PI;						break;
-        case kSVGraphicLowerLeftHandle:		radians = M_PI + M_PI_4;			break;
-        case kSVGraphicLowerMiddleHandle:	radians = M_PI + M_PI_2;			break;
-        case kSVGraphicLowerRightHandle:	radians = M_PI + M_PI_2 + M_PI_4;	break;
+        case KSSelectionBorderUpperLeftHandle:		radians = M_PI_4 + M_PI_2;			break;
+        case KSSelectionBorderUpperMiddleHandle:	radians = M_PI_2;					break;
+        case KSSelectionBorderUpperRightHandle:	radians = M_PI_4;					break;
+        case KSSelectionBorderMiddleLeftHandle:	radians = M_PI;						break;
+        case KSSelectionBorderMiddleRightHandle:	radians = M_PI;						break;
+        case KSSelectionBorderLowerLeftHandle:		radians = M_PI + M_PI_4;			break;
+        case KSSelectionBorderLowerMiddleHandle:	radians = M_PI + M_PI_2;			break;
+        case KSSelectionBorderLowerRightHandle:	radians = M_PI + M_PI_2 + M_PI_4;	break;
         default: break;
     }
     return [ESCursors straightCursorForAngle:radians withSize:16.0];
@@ -149,17 +149,17 @@
 - (BOOL)mouse:(NSPoint)mousePoint
     isInFrame:(NSRect)frameRect
        inView:(NSView *)view
-       handle:(SVGraphicHandle *)outHandle;
+       handle:(KSSelectionBorderHandle *)outHandle;
 {
     // Search through the handles
-    SVGraphicHandle handle = [self handleAtPoint:mousePoint frameRect:frameRect];
+    KSSelectionBorderHandle handle = [self handleAtPoint:mousePoint frameRect:frameRect];
     BOOL result = [self canResizeUsingHandle:handle];
     
     // Fallback to the frame if appropriate. Make sure to reset handle
     if (!result)
     {
         result = [view mouse:mousePoint inRect:frameRect];
-        handle = kSVGraphicNoHandle;
+        handle = KSSelectionBorderNoHandle;
     }
     
     if (outHandle) *outHandle = handle;
@@ -169,78 +169,78 @@
 - (NSInteger)handleAtPoint:(NSPoint)point frameRect:(NSRect)bounds;
 {
     // Check handles at the corners and on the sides.
-    NSInteger result = kSVGraphicNoHandle;
-    if ([self isPoint:point withinHandle:kSVGraphicUpperLeftHandle frameRect:bounds])
+    NSInteger result = KSSelectionBorderNoHandle;
+    if ([self isPoint:point withinHandle:KSSelectionBorderUpperLeftHandle frameRect:bounds])
     {
-        result = kSVGraphicUpperLeftHandle;
+        result = KSSelectionBorderUpperLeftHandle;
     }
-    else if ([self isPoint:point withinHandle:kSVGraphicUpperMiddleHandle frameRect:bounds])
+    else if ([self isPoint:point withinHandle:KSSelectionBorderUpperMiddleHandle frameRect:bounds])
     {
-        result = kSVGraphicUpperMiddleHandle;
+        result = KSSelectionBorderUpperMiddleHandle;
     }
-    else if ([self isPoint:point withinHandle:kSVGraphicUpperRightHandle frameRect:bounds])
+    else if ([self isPoint:point withinHandle:KSSelectionBorderUpperRightHandle frameRect:bounds])
     {
-        result = kSVGraphicUpperRightHandle;
+        result = KSSelectionBorderUpperRightHandle;
     }
-    else if ([self isPoint:point withinHandle:kSVGraphicMiddleLeftHandle frameRect:bounds])
+    else if ([self isPoint:point withinHandle:KSSelectionBorderMiddleLeftHandle frameRect:bounds])
     {
-        result = kSVGraphicMiddleLeftHandle;
+        result = KSSelectionBorderMiddleLeftHandle;
     }
-    else if ([self isPoint:point withinHandle:kSVGraphicMiddleRightHandle frameRect:bounds])
+    else if ([self isPoint:point withinHandle:KSSelectionBorderMiddleRightHandle frameRect:bounds])
     {
-        result = kSVGraphicMiddleRightHandle;
+        result = KSSelectionBorderMiddleRightHandle;
     }
-    else if ([self isPoint:point withinHandle:kSVGraphicLowerLeftHandle frameRect:bounds])
+    else if ([self isPoint:point withinHandle:KSSelectionBorderLowerLeftHandle frameRect:bounds])
     {
-        result = kSVGraphicLowerLeftHandle;
+        result = KSSelectionBorderLowerLeftHandle;
     }
-    else if ([self isPoint:point withinHandle:kSVGraphicLowerMiddleHandle frameRect:bounds])
+    else if ([self isPoint:point withinHandle:KSSelectionBorderLowerMiddleHandle frameRect:bounds])
     {
-        result = kSVGraphicLowerMiddleHandle;
+        result = KSSelectionBorderLowerMiddleHandle;
     }
-    else if ([self isPoint:point withinHandle:kSVGraphicLowerRightHandle frameRect:bounds])
+    else if ([self isPoint:point withinHandle:KSSelectionBorderLowerRightHandle frameRect:bounds])
     {
-        result = kSVGraphicLowerRightHandle;
+        result = KSSelectionBorderLowerRightHandle;
     }
     
     return result;
 }
 
-- (NSPoint)locationOfHandle:(SVGraphicHandle)handle frameRect:(NSRect)bounds;
+- (NSPoint)locationOfHandle:(KSSelectionBorderHandle)handle frameRect:(NSRect)bounds;
 {
     NSPoint result = NSZeroPoint;
     
     switch (handle)
     {
-        case kSVGraphicUpperLeftHandle:
+        case KSSelectionBorderUpperLeftHandle:
             result = NSMakePoint(NSMinX(bounds), NSMinY(bounds));
             break;
             
-        case kSVGraphicUpperMiddleHandle:
+        case KSSelectionBorderUpperMiddleHandle:
             result = NSMakePoint(NSMidX(bounds), NSMinY(bounds));
             break;
             
-        case kSVGraphicUpperRightHandle:
+        case KSSelectionBorderUpperRightHandle:
             result = NSMakePoint(NSMaxX(bounds), NSMinY(bounds));
             break;
             
-        case kSVGraphicMiddleLeftHandle:
+        case KSSelectionBorderMiddleLeftHandle:
             result = NSMakePoint(NSMinX(bounds), NSMidY(bounds));
             break;
             
-        case kSVGraphicMiddleRightHandle:
+        case KSSelectionBorderMiddleRightHandle:
             result = NSMakePoint(NSMaxX(bounds), NSMidY(bounds));
             break;
             
-        case kSVGraphicLowerLeftHandle:
+        case KSSelectionBorderLowerLeftHandle:
             result = NSMakePoint(NSMinX(bounds), NSMaxY(bounds));
             break;
             
-        case kSVGraphicLowerMiddleHandle:
+        case KSSelectionBorderLowerMiddleHandle:
             result = NSMakePoint(NSMidX(bounds), NSMaxY(bounds));
             break;
             
-        case kSVGraphicLowerRightHandle:
+        case KSSelectionBorderLowerRightHandle:
             result = NSMakePoint(NSMaxX(bounds), NSMaxY(bounds));
             break;
             
@@ -252,7 +252,7 @@
     return result;
 }
 
-- (BOOL)isPoint:(NSPoint)point withinHandle:(SVGraphicHandle)handle frameRect:(NSRect)bounds;
+- (BOOL)isPoint:(NSPoint)point withinHandle:(KSSelectionBorderHandle)handle frameRect:(NSRect)bounds;
 {
     NSPoint handlePoint = [self locationOfHandle:handle frameRect:bounds];
     BOOL result = [self isPoint:point withinHandleAtPoint:handlePoint];

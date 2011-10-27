@@ -12,16 +12,16 @@
 
 
 typedef enum {
-    kSVGraphicNoHandle,
-    kSVGraphicUpperLeftHandle,
-    kSVGraphicUpperMiddleHandle,
-    kSVGraphicUpperRightHandle,
-    kSVGraphicMiddleLeftHandle,
-    kSVGraphicMiddleRightHandle,
-    kSVGraphicLowerLeftHandle,
-    kSVGraphicLowerMiddleHandle,
-    kSVGraphicLowerRightHandle,
-} SVGraphicHandle;
+    KSSelectionBorderNoHandle,
+    KSSelectionBorderUpperLeftHandle,
+    KSSelectionBorderUpperMiddleHandle,
+    KSSelectionBorderUpperRightHandle,
+    KSSelectionBorderMiddleLeftHandle,
+    KSSelectionBorderMiddleRightHandle,
+    KSSelectionBorderLowerLeftHandle,
+    KSSelectionBorderLowerMiddleHandle,
+    KSSelectionBorderLowerRightHandle,
+} KSSelectionBorderHandle;
 
 
 
@@ -50,11 +50,11 @@ enum
 
 #pragma mark Resizing
 @property(nonatomic) unsigned int resizingMask; // bitmask of CAEdgeAntialiasingMask
-- (BOOL)canResizeUsingHandle:(SVGraphicHandle)handle;
+- (BOOL)canResizeUsingHandle:(KSSelectionBorderHandle)handle;
 
 
 #pragma mark Cursor
-+ (NSCursor *)cursorWithHandle:(SVGraphicHandle)handle;
++ (NSCursor *)cursorWithHandle:(KSSelectionBorderHandle)handle;
 
 
 #pragma mark Layout
@@ -65,10 +65,10 @@ enum
 - (BOOL)mouse:(NSPoint)mousePoint
     isInFrame:(NSRect)frameRect
        inView:(NSView *)view
-       handle:(SVGraphicHandle *)handle;
+       handle:(KSSelectionBorderHandle *)handle;
 
 - (NSInteger)handleAtPoint:(NSPoint)point frameRect:(NSRect)bounds;
-- (NSPoint)locationOfHandle:(SVGraphicHandle)handle frameRect:(NSRect)bounds;
+- (NSPoint)locationOfHandle:(KSSelectionBorderHandle)handle frameRect:(NSRect)bounds;
 
 
 #pragma mark Drawing
