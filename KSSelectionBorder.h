@@ -49,7 +49,10 @@ enum
 
 
 #pragma mark Resizing
-@property(nonatomic) unsigned int resizingMask; // bitmask of CAEdgeAntialiasingMask
+
+// Bitmask of CAEdgeAntialiasingMask. Deliberately unsigned int to match CALayer.edgeAntialiasingMask
+@property(nonatomic) unsigned int resizingMask;
+
 - (BOOL)canResizeUsingHandle:(KSSelectionBorderHandle)handle;
 
 
