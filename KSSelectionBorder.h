@@ -11,7 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-typedef enum {
+typedef NS_ENUM(NSInteger, KSSelectionBorderHandle) {
     KSSelectionBorderNoHandle,
     KSSelectionBorderUpperLeftHandle,
     KSSelectionBorderUpperMiddleHandle,
@@ -21,7 +21,7 @@ typedef enum {
     KSSelectionBorderLowerLeftHandle,
     KSSelectionBorderLowerMiddleHandle,
     KSSelectionBorderLowerRightHandle,
-} KSSelectionBorderHandle;
+};
 
 
 
