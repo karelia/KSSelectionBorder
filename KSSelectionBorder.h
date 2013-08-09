@@ -86,15 +86,15 @@ enum
 - (BOOL)mouse:(NSPoint)mousePoint
     isInFrame:(NSRect)frameRect
        inView:(NSView *)view
-       handle:(KSSelectionBorderHandle *)handle;
+       handle:(KSSelectionBorderHandle *)handle __attribute((nonnull(3)));
 
 - (NSInteger)handleAtPoint:(NSPoint)point frameRect:(NSRect)bounds;
 - (NSPoint)locationOfHandle:(KSSelectionBorderHandle)handle frameRect:(NSRect)bounds;
 
 
 #pragma mark Drawing
-- (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
-- (void)drawWithGraphicBounds:(NSRect)bounds inView:(NSView *)view;
+- (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view __attribute((nonnull(2)));
+- (void)drawWithGraphicBounds:(NSRect)bounds inView:(NSView *)view __attribute((nonnull(2)));
 
 
 @end
